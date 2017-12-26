@@ -144,7 +144,7 @@ def load_data_generate_batches(x_files_tr, y_files_tr, num_classes, bs=8, edgele
         A = S.ReadAsArray(int(0), int(0), int(edgelength), int(edgelength)) # define edgelength       
         where_are_NaNs = np.isnan(A)
         A[where_are_NaNs] = -40.            
-        X = np.transpose(A)
+        X = np.moveaxis(A, 0, -1)
         
         S_y = gdal.Open(y_files_tr[i])        
         if centr == True:
@@ -224,7 +224,7 @@ def generate_test(X_locs, y_locs, edgelength, num_classes, centr=True):
         A = S.ReadAsArray(int(0), int(0), int(edgelength), int(edgelength))
         where_are_NaNs = np.isnan(A)
         A[where_are_NaNs] = -40.
-        A = np.transpose(A)
+        A = np.moveaxis(A, 0, -1)
         
         if centr == True:
             y = S_y.ReadAsArray(int(edgelength/2), int(edgelength/2), 1, 1)[0][0]
